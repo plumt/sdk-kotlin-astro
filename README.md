@@ -18,6 +18,9 @@ dependencies {
 ```
 
 ```kotlin
+import net.plumt.astro.lunar.LunarCalculator
+import net.plumt.astro.lunar.LunarCalculatorConfig
+
 val lunar = LunarCalculator.create()                 // 기본 시간대: 한국 표준시
 lunar.phasesOfMonth(2026, 11)                        // 그 달의 위상 4종
 lunar.specialMoonsOfYear(2026)                       // 슈퍼문·미니문·블루문
