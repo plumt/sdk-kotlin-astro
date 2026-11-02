@@ -4,7 +4,7 @@
 
 | 모듈 | 좌표 | 상태 |
 |---|---|---|
-| `lunar` | `net.plumt.astro:lunar` | 준비 중 (0.0.1) |
+| `lunar` | `net.plumt.astro:lunar` | [![Maven Central](https://img.shields.io/maven-central/v/net.plumt.astro/lunar)](https://central.sonatype.com/artifact/net.plumt.astro/lunar) |
 
 ## lunar
 

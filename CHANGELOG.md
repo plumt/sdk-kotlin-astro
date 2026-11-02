@@ -6,7 +6,7 @@
 
 ### [Unreleased]
 
-### [0.0.1] - 미발행
+### [0.0.1] - 2026-11-02
 
 #### 추가
 - `LunarCalculator` 진입점과 `LunarCalculatorConfig`(시간대, 기본 한국 표준시)
