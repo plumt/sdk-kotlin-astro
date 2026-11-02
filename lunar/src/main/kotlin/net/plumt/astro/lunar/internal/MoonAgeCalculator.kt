@@ -34,21 +34,20 @@ internal object MoonAgeCalculator {
      *
      * 위상값에 삭망월 길이를 곱한 "월령" 은 하루 안에서도 변하고 날짜 경계가 삭 시각에 걸려,
      * 달력의 음력 날짜와 대부분 하루 어긋난다 — 그래서 날짜끼리 센다.
-     * 직전 삭을 못 찾으면 1 을 돌려준다.
+     * 앞뒤 [SEARCH_MONTHS] 달 안에는 삭이 반드시 있어, 못 찾으면 계산이 깨진 것으로 보고 실패시킨다.
      */
     fun lunarDayOf(date: LocalDate, algorithm: MeeusChapter49Algorithm): Int {
         val newMoonDate = newMoonsAround(date.atStartOfDay(), algorithm)
             .map { it.toLocalDate() }
             .lastOrNull { !it.isAfter(date) }
-            ?: return 1
+            ?: error("$date 이전 삭을 찾지 못했다")
         return (date.toEpochDay() - newMoonDate.toEpochDay()).toInt() + 1
     }
 
     private fun phaseFrom(at: LocalDateTime, newMoons: List<LocalDateTime>): Double {
-        val previous = newMoons.lastOrNull { !it.isAfter(at) } ?: return 0.0
-        val next = newMoons.firstOrNull { it.isAfter(at) } ?: return 0.0
+        val previous = checkNotNull(newMoons.lastOrNull { !it.isAfter(at) }) { "$at 이전 삭을 찾지 못했다" }
+        val next = checkNotNull(newMoons.firstOrNull { it.isAfter(at) }) { "$at 이후 삭을 찾지 못했다" }
         val lunation = Duration.between(previous, next).toMillis().toDouble()
-        if (lunation <= 0.0) return 0.0
         return (Duration.between(previous, at).toMillis() / lunation).coerceIn(0.0, 1.0)
     }
 

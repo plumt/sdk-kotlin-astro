@@ -20,6 +20,16 @@ import java.time.ZoneId
  * 받는 시각과 돌려주는 시각은 모두 [zone] 의 현지 시각([LocalDateTime])이고, 연·월·일 경계도 그 시간대로 나눈다.
  * 구현은 상태가 없어 여러 스레드에서 함께 써도 된다.
  *
+ * ## 오류
+ * - 인자가 틀리면 [IllegalArgumentException] — 연도가 [MIN_YEAR]..[MAX_YEAR] 밖이거나 월이 1..12 밖일 때.
+ *   메시지에 받은 값과 허용 범위가 들어간다
+ * - 인자는 맞는데 계산이 끝나지 못하면 [LunarCalculationException] — 원인은 `cause` 에 있다.
+ *   교체한 [SpecialMoonCriteria] 가 던진 예외도 이것으로 감싼다
+ * - 그 밖의 "없음" 은 예외가 아니라 값으로 알린다(빈 목록·null). 각 함수 설명을 본다
+ *
+ * 정확도는 [MIN_YEAR]..[MAX_YEAR] 안에서도 2005~2050년이 가장 좋다. ΔT 추정식이 그 구간에 맞춰져 있어
+ * 멀어질수록 거리·출몰·절기 시각의 오차가 커진다(위상 시각은 ΔT 를 쓰지 않는다).
+ *
  * ```
  * val lunar = LunarCalculator.create()                                   // 한국 표준시
  * val utc = LunarCalculator.create(LunarCalculatorConfig(zone = ZoneOffset.UTC))
@@ -72,6 +82,12 @@ public interface LunarCalculator {
     public fun solarTermsOfYear(year: Int): List<SolarTerm>
 
     public companion object {
+        /** 계산을 받는 가장 이른 연도. */
+        public const val MIN_YEAR: Int = 1900
+
+        /** 계산을 받는 가장 늦은 연도. */
+        public const val MAX_YEAR: Int = 2100
+
         /** [config] 로 계산기를 만든다. 기본값은 한국 표준시와 거리 기준 슈퍼문·미니문이다. */
         public fun create(config: LunarCalculatorConfig = LunarCalculatorConfig()): LunarCalculator =
             DefaultLunarCalculator(config)

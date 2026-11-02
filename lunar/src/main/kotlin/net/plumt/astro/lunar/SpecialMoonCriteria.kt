@@ -29,6 +29,7 @@ public data class FullMoonSample(
  * 망 시점 지구-달 거리를 고정 임계값과 비교한다.
  *
  * 기본값은 매체에서 흔히 인용하는 수치다 — 슈퍼문 360,000 km 이하, 미니문 405,000 km 이상.
+ * 두 값은 양의 유한한 수이고 슈퍼문 임계가 미니문 임계보다 작아야 하며, 아니면 [IllegalArgumentException] 을 던진다.
  */
 public class DistanceThresholdCriteria(
     private val supermoonMaxKm: Double = DEFAULT_SUPERMOON_MAX_KM,
@@ -36,6 +37,8 @@ public class DistanceThresholdCriteria(
 ) : SpecialMoonCriteria {
 
     init {
+        require(supermoonMaxKm.isFinite() && supermoonMaxKm > 0.0) { "supermoonMaxKm($supermoonMaxKm) 는 양의 유한한 수여야 한다" }
+        require(minimoonMinKm.isFinite() && minimoonMinKm > 0.0) { "minimoonMinKm($minimoonMinKm) 는 양의 유한한 수여야 한다" }
         require(supermoonMaxKm < minimoonMinKm) { "supermoonMaxKm($supermoonMaxKm) 는 minimoonMinKm($minimoonMinKm) 보다 작아야 한다" }
     }
 

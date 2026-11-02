@@ -24,8 +24,15 @@ public final class net/plumt/astro/lunar/FullMoonSample {
 	public fun toString ()Ljava/lang/String;
 }
 
+public final class net/plumt/astro/lunar/LunarCalculationException : java/lang/RuntimeException {
+	public fun <init> (Ljava/lang/String;Ljava/lang/Throwable;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/Throwable;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+}
+
 public abstract interface class net/plumt/astro/lunar/LunarCalculator {
 	public static final field Companion Lnet/plumt/astro/lunar/LunarCalculator$Companion;
+	public static final field MAX_YEAR I
+	public static final field MIN_YEAR I
 	public abstract fun distanceKm (Ljava/time/LocalDateTime;)D
 	public abstract fun getZone ()Ljava/time/ZoneId;
 	public abstract fun isBlueMoon (Lnet/plumt/astro/lunar/model/LunarPhaseEvent;)Z
@@ -45,6 +52,8 @@ public abstract interface class net/plumt/astro/lunar/LunarCalculator {
 }
 
 public final class net/plumt/astro/lunar/LunarCalculator$Companion {
+	public static final field MAX_YEAR I
+	public static final field MIN_YEAR I
 	public final fun create (Lnet/plumt/astro/lunar/LunarCalculatorConfig;)Lnet/plumt/astro/lunar/LunarCalculator;
 	public static synthetic fun create$default (Lnet/plumt/astro/lunar/LunarCalculator$Companion;Lnet/plumt/astro/lunar/LunarCalculatorConfig;ILjava/lang/Object;)Lnet/plumt/astro/lunar/LunarCalculator;
 }

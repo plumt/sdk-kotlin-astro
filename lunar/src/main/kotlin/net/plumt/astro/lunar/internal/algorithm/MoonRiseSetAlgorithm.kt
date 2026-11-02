@@ -66,14 +66,14 @@ internal class MoonRiseSetAlgorithm(
         val beta = Math.toRadians(moon.latDeg)
 
         val ra = atan2(sin(lambda) * cos(eps) - tan(beta) * sin(eps), cos(lambda))
-        val dec = asin(sin(beta) * cos(eps) + cos(beta) * sin(eps) * sin(lambda))
+        val dec = asinClamped(sin(beta) * cos(eps) + cos(beta) * sin(eps) * sin(lambda))
 
         val theta = apparentSiderealDeg(jdUt, deltaPsi, eps)
         val hourAngle = Math.toRadians(theta + location.longitudeDeg) - ra
         val phi = Math.toRadians(location.latitudeDeg)
-        val altitude = Math.toDegrees(asin(sin(phi) * sin(dec) + cos(phi) * cos(dec) * cos(hourAngle)))
+        val altitude = Math.toDegrees(asinClamped(sin(phi) * sin(dec) + cos(phi) * cos(dec) * cos(hourAngle)))
 
-        val parallaxDeg = Math.toDegrees(asin(EARTH_RADIUS_KM / moon.distanceKm))
+        val parallaxDeg = Math.toDegrees(asinClamped(EARTH_RADIUS_KM / moon.distanceKm))
         val h0 = PARALLAX_FACTOR * parallaxDeg - REFRACTION_DEG
         return altitude - h0
     }
@@ -157,6 +157,9 @@ internal class MoonRiseSetAlgorithm(
 
     private fun poly(t: Double, c0: Double, c1: Double, c2: Double, c3: Double, c4: Double): Double =
         c0 + t * (c1 + t * (c2 + t * (c3 + t * c4)))
+
+    // 부동소수 오차로 ±1 을 살짝 넘으면 asin 이 NaN 이 되고, NaN 고도는 부호 비교를 모두 거짓으로 만들어 출몰을 조용히 놓친다
+    private fun asinClamped(x: Double): Double = asin(x.coerceIn(-1.0, 1.0))
 
     private fun sinDeg(deg: Double): Double = sin(Math.toRadians(deg % 360.0))
 

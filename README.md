@@ -31,6 +31,7 @@ val utc = LunarCalculator.create(LunarCalculatorConfig(zone = ZoneOffset.UTC))
 
 - 진입점은 `LunarCalculator` 하나다. 상태가 없어 앱에 하나만 두고 공유한다
 - 슈퍼문·미니문에는 공식 정의가 없어 판정 기준(`SpecialMoonCriteria`)을 바꿔 끼울 수 있다
+- 연도는 1900~2100 을 받는다(정확도는 2005~2050 이 가장 좋다). 틀린 인자는 `IllegalArgumentException`, 계산 실패는 `LunarCalculationException` 이다
 - 오류와 실패 신호는 [ERRORS.md](ERRORS.md), 변경 이력은 [CHANGELOG.md](CHANGELOG.md)
 
 ## 버전

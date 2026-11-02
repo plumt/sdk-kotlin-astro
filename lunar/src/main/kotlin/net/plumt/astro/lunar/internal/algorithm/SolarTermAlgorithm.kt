@@ -87,8 +87,10 @@ internal class SolarTermAlgorithm(
 
         // 양력 연도가 목표 연도보다 크면(다음 해로 넘어감) 1년 앞으로 당긴다.
         // (소한/대한/입춘처럼 황경이 285° 이상인 절기가 1~3월에 발생하는 경우)
-        while (yearOfJde(jde) > year) jde -= TROPICAL_YEAR_DAYS
-        while (yearOfJde(jde) < year) jde += TROPICAL_YEAR_DAYS
+        // 근사식은 목표 연도에서 한 해 넘게 벗어나지 않는다. 횟수를 묶어 둬 값이 깨져도 멈추게 한다
+        repeat(MAX_YEAR_SHIFTS) { if (yearOfJde(jde) > year) jde -= TROPICAL_YEAR_DAYS }
+        repeat(MAX_YEAR_SHIFTS) { if (yearOfJde(jde) < year) jde += TROPICAL_YEAR_DAYS }
+        check(yearOfJde(jde) == year) { "$year 년 절기 근사값이 그해로 들어오지 않는다: jde=$jde" }
 
         return jde
     }
@@ -145,6 +147,9 @@ internal class SolarTermAlgorithm(
         const val DAYS_PER_DEGREE = 1.01456152
         // 1 회귀년(tropical year) 일 수
         const val TROPICAL_YEAR_DAYS = 365.2422
+
+        // 근사 JDE 를 목표 연도로 옮기는 최대 횟수(방향마다)
+        const val MAX_YEAR_SHIFTS = 2
         const val MAX_ITERATIONS = 50
         // 수렴 임계값(일): 1e-6일 ≈ 0.09초
         const val CONVERGENCE_DAYS = 1e-6

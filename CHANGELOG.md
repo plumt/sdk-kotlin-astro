@@ -13,3 +13,5 @@
 - 위상(삭·상현·망·하현)·음력 일자·오늘의 달·월간 달력
 - 블루문·슈퍼문·미니문. 판정 기준은 `SpecialMoonCriteria` 로 교체 가능, 기본 `DistanceThresholdCriteria`(360,000 km / 405,000 km)
 - 지구-달 거리, 월출·월몰(관측 지점 지정), 24절기
+- 지원 연도 `MIN_YEAR`(1900)..`MAX_YEAR`(2100), 모든 진입점의 인자 검사(`IllegalArgumentException`)
+- 계산 실패를 알리는 `LunarCalculationException` — 교체한 판정 기준의 예외도 원인을 담아 감싼다
