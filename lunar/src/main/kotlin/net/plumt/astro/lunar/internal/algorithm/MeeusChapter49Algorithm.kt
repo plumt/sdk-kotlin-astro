@@ -31,7 +31,7 @@ internal class MeeusChapter49Algorithm(
         val candidates = mutableListOf<LunarPhaseEvent>()
 
         for (kBase in (kApprox.toInt() - 1)..(kApprox.toInt() + 1)) {
-            for (phaseType in LunarPhaseType.entries) {
+            for (phaseType in LunarPhaseType.values) {
                 val k = kBase.toDouble() + phaseType.kFraction
                 val jde = computeJde(k, phaseType)
                 val local = jdeToLocal(jde, if (applyDeltaT) AstroTime.estimateDeltaT(year) else 0.0)
@@ -107,10 +107,10 @@ internal class MeeusChapter49Algorithm(
         val omega = toRad(124.7746 - 1.56375588 * k + 0.0020672 * t2 + 0.00000215 * t3)
 
         jde += when (phaseType) {
-            LunarPhaseType.NEW_MOON -> correctionNewMoon(e, m, mP, f, omega)
-            LunarPhaseType.FULL_MOON -> correctionFullMoon(e, m, mP, f, omega)
-            LunarPhaseType.FIRST_QUARTER -> correctionQuarter(e, m, mP, f, omega) + quarterW(e, m, mP, f)
-            LunarPhaseType.LAST_QUARTER -> correctionQuarter(e, m, mP, f, omega) - quarterW(e, m, mP, f)
+            LunarPhaseType.NewMoon -> correctionNewMoon(e, m, mP, f, omega)
+            LunarPhaseType.FullMoon -> correctionFullMoon(e, m, mP, f, omega)
+            LunarPhaseType.FirstQuarter -> correctionQuarter(e, m, mP, f, omega) + quarterW(e, m, mP, f)
+            LunarPhaseType.LastQuarter -> correctionQuarter(e, m, mP, f, omega) - quarterW(e, m, mP, f)
         }
 
         jde += planetaryCorrections(k, t)

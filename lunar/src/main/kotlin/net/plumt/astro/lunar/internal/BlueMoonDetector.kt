@@ -14,7 +14,7 @@ internal object BlueMoonDetector {
 
     /** [event] 가 그 달의 블루문(두 번째 보름달)이면 true. 보름달이 아니면 false. */
     fun isBlueMoon(event: LunarPhaseEvent, algorithm: MeeusChapter49Algorithm): Boolean {
-        if (event.type != LunarPhaseType.FULL_MOON) return false
+        if (event.type != LunarPhaseType.FullMoon) return false
         return findBlueMoon(event.year, event.month, algorithm)?.dateTime == event.dateTime
     }
 
@@ -24,7 +24,7 @@ internal object BlueMoonDetector {
      * 같은 위상이 한 달에 두 번 드는 경우를 모두 모아야 해서 [MeeusChapter49Algorithm.eventsOfTypeInMonth] 를 쓴다.
      */
     fun findBlueMoon(year: Int, month: Int, algorithm: MeeusChapter49Algorithm): LunarPhaseEvent? {
-        val fullMoons = algorithm.eventsOfTypeInMonth(year, month, LunarPhaseType.FULL_MOON)
+        val fullMoons = algorithm.eventsOfTypeInMonth(year, month, LunarPhaseType.FullMoon)
         return if (fullMoons.size >= 2) fullMoons.last() else null
     }
 }

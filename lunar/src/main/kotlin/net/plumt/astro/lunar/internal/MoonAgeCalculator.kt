@@ -55,7 +55,7 @@ internal object MoonAgeCalculator {
         val base = YearMonth.of(around.year, around.monthValue)
         return (-SEARCH_MONTHS..SEARCH_MONTHS)
             .map { base.plusMonths(it.toLong()) }
-            .flatMap { algorithm.eventsOfTypeInMonth(it.year, it.monthValue, LunarPhaseType.NEW_MOON) }
+            .flatMap { algorithm.eventsOfTypeInMonth(it.year, it.monthValue, LunarPhaseType.NewMoon) }
             .map { it.dateTime }
             .distinct()
             .sorted()

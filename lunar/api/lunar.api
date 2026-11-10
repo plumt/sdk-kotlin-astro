@@ -4,19 +4,45 @@ public final class net/plumt/astro/lunar/DistanceThresholdCriteria : net/plumt/a
 	public static final field DEFAULT_SUPERMOON_MAX_KM D
 	public fun <init> ()V
 	public fun <init> (DD)V
-	public synthetic fun <init> (DDILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun classify (Lnet/plumt/astro/lunar/FullMoonSample;)Lnet/plumt/astro/lunar/model/SpecialMoonType;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getMinimoonMinKm ()D
+	public final fun getSupermoonMaxKm ()D
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public final fun withMinimoonMinKm (D)Lnet/plumt/astro/lunar/DistanceThresholdCriteria;
+	public final fun withSupermoonMaxKm (D)Lnet/plumt/astro/lunar/DistanceThresholdCriteria;
 }
 
 public final class net/plumt/astro/lunar/DistanceThresholdCriteria$Companion {
 }
 
+public final class net/plumt/astro/lunar/FakeLunarCalculator : net/plumt/astro/lunar/LunarCalculator {
+	public fun <init> ()V
+	public fun <init> (Lnet/plumt/astro/lunar/LunarCalculatorConfig;)V
+	public final fun clearCalls ()V
+	public fun distanceKm (Ljava/time/LocalDateTime;)D
+	public final fun failWith (Ljava/lang/RuntimeException;)V
+	public final fun getCalls ()Ljava/util/List;
+	public fun getZone ()Ljava/time/ZoneId;
+	public fun isBlueMoon (Lnet/plumt/astro/lunar/model/LunarPhaseEvent;)Z
+	public fun lunarDayOf (Ljava/time/LocalDate;)I
+	public fun monthCalendar (II)Ljava/util/List;
+	public fun moonToday (Ljava/time/LocalDateTime;)Lnet/plumt/astro/lunar/model/MoonToday;
+	public fun phaseAt (Ljava/time/LocalDateTime;)D
+	public fun phaseEventsInMonth (IILnet/plumt/astro/lunar/model/LunarPhaseType;)Ljava/util/List;
+	public fun phasesOfMonth (II)Ljava/util/List;
+	public fun riseSet (Ljava/time/LocalDate;Lnet/plumt/astro/lunar/model/GeoLocation;)Lnet/plumt/astro/lunar/model/MoonRiseSet;
+	public fun riseSetsOfMonth (Ljava/time/YearMonth;Lnet/plumt/astro/lunar/model/GeoLocation;)Ljava/util/List;
+	public fun solarTermsOfYear (I)Ljava/util/List;
+	public fun specialFullMoons (I)Ljava/util/List;
+	public fun specialMoonsOfYear (I)Ljava/util/List;
+	public final fun succeed ()V
+	public fun toString ()Ljava/lang/String;
+}
+
 public final class net/plumt/astro/lunar/FullMoonSample {
 	public fun <init> (Ljava/time/LocalDateTime;D)V
-	public final fun component1 ()Ljava/time/LocalDateTime;
-	public final fun component2 ()D
-	public final fun copy (Ljava/time/LocalDateTime;D)Lnet/plumt/astro/lunar/FullMoonSample;
-	public static synthetic fun copy$default (Lnet/plumt/astro/lunar/FullMoonSample;Ljava/time/LocalDateTime;DILjava/lang/Object;)Lnet/plumt/astro/lunar/FullMoonSample;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getDateTime ()Ljava/time/LocalDateTime;
 	public final fun getDistanceKm ()D
@@ -25,14 +51,16 @@ public final class net/plumt/astro/lunar/FullMoonSample {
 }
 
 public final class net/plumt/astro/lunar/LunarCalculationException : java/lang/RuntimeException {
+	public fun <init> (Ljava/lang/String;)V
 	public fun <init> (Ljava/lang/String;Ljava/lang/Throwable;)V
-	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/Throwable;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 }
 
 public abstract interface class net/plumt/astro/lunar/LunarCalculator {
 	public static final field Companion Lnet/plumt/astro/lunar/LunarCalculator$Companion;
 	public static final field MAX_YEAR I
 	public static final field MIN_YEAR I
+	public static fun create ()Lnet/plumt/astro/lunar/LunarCalculator;
+	public static fun create (Lnet/plumt/astro/lunar/LunarCalculatorConfig;)Lnet/plumt/astro/lunar/LunarCalculator;
 	public abstract fun distanceKm (Ljava/time/LocalDateTime;)D
 	public abstract fun getZone ()Ljava/time/ZoneId;
 	public abstract fun isBlueMoon (Lnet/plumt/astro/lunar/model/LunarPhaseEvent;)Z
@@ -42,10 +70,10 @@ public abstract interface class net/plumt/astro/lunar/LunarCalculator {
 	public abstract fun phaseAt (Ljava/time/LocalDateTime;)D
 	public abstract fun phaseEventsInMonth (IILnet/plumt/astro/lunar/model/LunarPhaseType;)Ljava/util/List;
 	public abstract fun phasesOfMonth (II)Ljava/util/List;
+	public fun riseSet (Ljava/time/LocalDate;)Lnet/plumt/astro/lunar/model/MoonRiseSet;
 	public abstract fun riseSet (Ljava/time/LocalDate;Lnet/plumt/astro/lunar/model/GeoLocation;)Lnet/plumt/astro/lunar/model/MoonRiseSet;
-	public static synthetic fun riseSet$default (Lnet/plumt/astro/lunar/LunarCalculator;Ljava/time/LocalDate;Lnet/plumt/astro/lunar/model/GeoLocation;ILjava/lang/Object;)Lnet/plumt/astro/lunar/model/MoonRiseSet;
+	public fun riseSetsOfMonth (Ljava/time/YearMonth;)Ljava/util/List;
 	public abstract fun riseSetsOfMonth (Ljava/time/YearMonth;Lnet/plumt/astro/lunar/model/GeoLocation;)Ljava/util/List;
-	public static synthetic fun riseSetsOfMonth$default (Lnet/plumt/astro/lunar/LunarCalculator;Ljava/time/YearMonth;Lnet/plumt/astro/lunar/model/GeoLocation;ILjava/lang/Object;)Ljava/util/List;
 	public abstract fun solarTermsOfYear (I)Ljava/util/List;
 	public abstract fun specialFullMoons (I)Ljava/util/List;
 	public abstract fun specialMoonsOfYear (I)Ljava/util/List;
@@ -54,33 +82,31 @@ public abstract interface class net/plumt/astro/lunar/LunarCalculator {
 public final class net/plumt/astro/lunar/LunarCalculator$Companion {
 	public static final field MAX_YEAR I
 	public static final field MIN_YEAR I
+	public final fun create ()Lnet/plumt/astro/lunar/LunarCalculator;
 	public final fun create (Lnet/plumt/astro/lunar/LunarCalculatorConfig;)Lnet/plumt/astro/lunar/LunarCalculator;
-	public static synthetic fun create$default (Lnet/plumt/astro/lunar/LunarCalculator$Companion;Lnet/plumt/astro/lunar/LunarCalculatorConfig;ILjava/lang/Object;)Lnet/plumt/astro/lunar/LunarCalculator;
-}
-
-public final class net/plumt/astro/lunar/LunarCalculator$DefaultImpls {
-	public static synthetic fun riseSet$default (Lnet/plumt/astro/lunar/LunarCalculator;Ljava/time/LocalDate;Lnet/plumt/astro/lunar/model/GeoLocation;ILjava/lang/Object;)Lnet/plumt/astro/lunar/model/MoonRiseSet;
-	public static synthetic fun riseSetsOfMonth$default (Lnet/plumt/astro/lunar/LunarCalculator;Ljava/time/YearMonth;Lnet/plumt/astro/lunar/model/GeoLocation;ILjava/lang/Object;)Ljava/util/List;
 }
 
 public final class net/plumt/astro/lunar/LunarCalculatorConfig {
 	public static final field Companion Lnet/plumt/astro/lunar/LunarCalculatorConfig$Companion;
-	public fun <init> ()V
-	public fun <init> (Ljava/time/ZoneId;Lnet/plumt/astro/lunar/SpecialMoonCriteria;)V
-	public synthetic fun <init> (Ljava/time/ZoneId;Lnet/plumt/astro/lunar/SpecialMoonCriteria;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1 ()Ljava/time/ZoneId;
-	public final fun component2 ()Lnet/plumt/astro/lunar/SpecialMoonCriteria;
-	public final fun copy (Ljava/time/ZoneId;Lnet/plumt/astro/lunar/SpecialMoonCriteria;)Lnet/plumt/astro/lunar/LunarCalculatorConfig;
-	public static synthetic fun copy$default (Lnet/plumt/astro/lunar/LunarCalculatorConfig;Ljava/time/ZoneId;Lnet/plumt/astro/lunar/SpecialMoonCriteria;ILjava/lang/Object;)Lnet/plumt/astro/lunar/LunarCalculatorConfig;
+	public static final field KST Ljava/time/ZoneId;
+	public synthetic fun <init> (Lnet/plumt/astro/lunar/LunarCalculatorConfig$Builder;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public static final fun builder ()Lnet/plumt/astro/lunar/LunarCalculatorConfig$Builder;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getSpecialMoonCriteria ()Lnet/plumt/astro/lunar/SpecialMoonCriteria;
 	public final fun getZone ()Ljava/time/ZoneId;
 	public fun hashCode ()I
+	public final fun toBuilder ()Lnet/plumt/astro/lunar/LunarCalculatorConfig$Builder;
 	public fun toString ()Ljava/lang/String;
 }
 
+public final class net/plumt/astro/lunar/LunarCalculatorConfig$Builder {
+	public final fun build ()Lnet/plumt/astro/lunar/LunarCalculatorConfig;
+	public final fun specialMoonCriteria (Lnet/plumt/astro/lunar/SpecialMoonCriteria;)Lnet/plumt/astro/lunar/LunarCalculatorConfig$Builder;
+	public final fun zone (Ljava/time/ZoneId;)Lnet/plumt/astro/lunar/LunarCalculatorConfig$Builder;
+}
+
 public final class net/plumt/astro/lunar/LunarCalculatorConfig$Companion {
-	public final fun getKST ()Ljava/time/ZoneId;
+	public final fun builder ()Lnet/plumt/astro/lunar/LunarCalculatorConfig$Builder;
 }
 
 public abstract interface class net/plumt/astro/lunar/SpecialMoonCriteria {
@@ -89,11 +115,8 @@ public abstract interface class net/plumt/astro/lunar/SpecialMoonCriteria {
 
 public final class net/plumt/astro/lunar/model/GeoLocation {
 	public static final field Companion Lnet/plumt/astro/lunar/model/GeoLocation$Companion;
+	public static final field SEOUL Lnet/plumt/astro/lunar/model/GeoLocation;
 	public fun <init> (DD)V
-	public final fun component1 ()D
-	public final fun component2 ()D
-	public final fun copy (DD)Lnet/plumt/astro/lunar/model/GeoLocation;
-	public static synthetic fun copy$default (Lnet/plumt/astro/lunar/model/GeoLocation;DDILjava/lang/Object;)Lnet/plumt/astro/lunar/model/GeoLocation;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getLatitudeDeg ()D
 	public final fun getLongitudeDeg ()D
@@ -102,15 +125,10 @@ public final class net/plumt/astro/lunar/model/GeoLocation {
 }
 
 public final class net/plumt/astro/lunar/model/GeoLocation$Companion {
-	public final fun getSEOUL ()Lnet/plumt/astro/lunar/model/GeoLocation;
 }
 
 public final class net/plumt/astro/lunar/model/LunarPhaseEvent {
 	public fun <init> (Lnet/plumt/astro/lunar/model/LunarPhaseType;Ljava/time/LocalDateTime;)V
-	public final fun component1 ()Lnet/plumt/astro/lunar/model/LunarPhaseType;
-	public final fun component2 ()Ljava/time/LocalDateTime;
-	public final fun copy (Lnet/plumt/astro/lunar/model/LunarPhaseType;Ljava/time/LocalDateTime;)Lnet/plumt/astro/lunar/model/LunarPhaseEvent;
-	public static synthetic fun copy$default (Lnet/plumt/astro/lunar/model/LunarPhaseEvent;Lnet/plumt/astro/lunar/model/LunarPhaseType;Ljava/time/LocalDateTime;ILjava/lang/Object;)Lnet/plumt/astro/lunar/model/LunarPhaseEvent;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getDateTime ()Ljava/time/LocalDateTime;
 	public final fun getDay ()I
@@ -123,26 +141,47 @@ public final class net/plumt/astro/lunar/model/LunarPhaseEvent {
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class net/plumt/astro/lunar/model/LunarPhaseType : java/lang/Enum {
-	public static final field FIRST_QUARTER Lnet/plumt/astro/lunar/model/LunarPhaseType;
-	public static final field FULL_MOON Lnet/plumt/astro/lunar/model/LunarPhaseType;
-	public static final field LAST_QUARTER Lnet/plumt/astro/lunar/model/LunarPhaseType;
-	public static final field NEW_MOON Lnet/plumt/astro/lunar/model/LunarPhaseType;
-	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+public abstract class net/plumt/astro/lunar/model/LunarPhaseType {
+	public static final field Companion Lnet/plumt/astro/lunar/model/LunarPhaseType$Companion;
+	public synthetic fun <init> (DLjava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun getKoreanName ()Ljava/lang/String;
-	public static fun valueOf (Ljava/lang/String;)Lnet/plumt/astro/lunar/model/LunarPhaseType;
-	public static fun values ()[Lnet/plumt/astro/lunar/model/LunarPhaseType;
+	public static final fun getValues ()Ljava/util/List;
+}
+
+public final class net/plumt/astro/lunar/model/LunarPhaseType$Companion {
+	public final fun getValues ()Ljava/util/List;
+}
+
+public final class net/plumt/astro/lunar/model/LunarPhaseType$FirstQuarter : net/plumt/astro/lunar/model/LunarPhaseType {
+	public static final field INSTANCE Lnet/plumt/astro/lunar/model/LunarPhaseType$FirstQuarter;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class net/plumt/astro/lunar/model/LunarPhaseType$FullMoon : net/plumt/astro/lunar/model/LunarPhaseType {
+	public static final field INSTANCE Lnet/plumt/astro/lunar/model/LunarPhaseType$FullMoon;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class net/plumt/astro/lunar/model/LunarPhaseType$LastQuarter : net/plumt/astro/lunar/model/LunarPhaseType {
+	public static final field INSTANCE Lnet/plumt/astro/lunar/model/LunarPhaseType$LastQuarter;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class net/plumt/astro/lunar/model/LunarPhaseType$NewMoon : net/plumt/astro/lunar/model/LunarPhaseType {
+	public static final field INSTANCE Lnet/plumt/astro/lunar/model/LunarPhaseType$NewMoon;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
 }
 
 public final class net/plumt/astro/lunar/model/MoonDay {
 	public fun <init> (Ljava/time/LocalDateTime;DILnet/plumt/astro/lunar/model/LunarPhaseEvent;Z)V
-	public final fun component1 ()Ljava/time/LocalDateTime;
-	public final fun component2 ()D
-	public final fun component3 ()I
-	public final fun component4 ()Lnet/plumt/astro/lunar/model/LunarPhaseEvent;
-	public final fun component5 ()Z
-	public final fun copy (Ljava/time/LocalDateTime;DILnet/plumt/astro/lunar/model/LunarPhaseEvent;Z)Lnet/plumt/astro/lunar/model/MoonDay;
-	public static synthetic fun copy$default (Lnet/plumt/astro/lunar/model/MoonDay;Ljava/time/LocalDateTime;DILnet/plumt/astro/lunar/model/LunarPhaseEvent;ZILjava/lang/Object;)Lnet/plumt/astro/lunar/model/MoonDay;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getDateTime ()Ljava/time/LocalDateTime;
 	public final fun getEvent ()Lnet/plumt/astro/lunar/model/LunarPhaseEvent;
@@ -155,11 +194,6 @@ public final class net/plumt/astro/lunar/model/MoonDay {
 
 public final class net/plumt/astro/lunar/model/MoonRiseSet {
 	public fun <init> (Ljava/time/LocalDate;Ljava/time/LocalDateTime;Ljava/time/LocalDateTime;)V
-	public final fun component1 ()Ljava/time/LocalDate;
-	public final fun component2 ()Ljava/time/LocalDateTime;
-	public final fun component3 ()Ljava/time/LocalDateTime;
-	public final fun copy (Ljava/time/LocalDate;Ljava/time/LocalDateTime;Ljava/time/LocalDateTime;)Lnet/plumt/astro/lunar/model/MoonRiseSet;
-	public static synthetic fun copy$default (Lnet/plumt/astro/lunar/model/MoonRiseSet;Ljava/time/LocalDate;Ljava/time/LocalDateTime;Ljava/time/LocalDateTime;ILjava/lang/Object;)Lnet/plumt/astro/lunar/model/MoonRiseSet;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getDate ()Ljava/time/LocalDate;
 	public final fun getRise ()Ljava/time/LocalDateTime;
@@ -170,16 +204,6 @@ public final class net/plumt/astro/lunar/model/MoonRiseSet {
 
 public final class net/plumt/astro/lunar/model/MoonToday {
 	public fun <init> (DIILnet/plumt/astro/lunar/model/LunarPhaseType;Ljava/util/List;IIZ)V
-	public final fun component1 ()D
-	public final fun component2 ()I
-	public final fun component3 ()I
-	public final fun component4 ()Lnet/plumt/astro/lunar/model/LunarPhaseType;
-	public final fun component5 ()Ljava/util/List;
-	public final fun component6 ()I
-	public final fun component7 ()I
-	public final fun component8 ()Z
-	public final fun copy (DIILnet/plumt/astro/lunar/model/LunarPhaseType;Ljava/util/List;IIZ)Lnet/plumt/astro/lunar/model/MoonToday;
-	public static synthetic fun copy$default (Lnet/plumt/astro/lunar/model/MoonToday;DIILnet/plumt/astro/lunar/model/LunarPhaseType;Ljava/util/List;IIZILjava/lang/Object;)Lnet/plumt/astro/lunar/model/MoonToday;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getDaysUntilFullMoon ()I
 	public final fun getDaysUntilNewMoon ()I
@@ -197,10 +221,6 @@ public final class net/plumt/astro/lunar/model/MoonToday {
 
 public final class net/plumt/astro/lunar/model/SolarTerm {
 	public fun <init> (Lnet/plumt/astro/lunar/model/SolarTermType;Ljava/time/LocalDateTime;)V
-	public final fun component1 ()Lnet/plumt/astro/lunar/model/SolarTermType;
-	public final fun component2 ()Ljava/time/LocalDateTime;
-	public final fun copy (Lnet/plumt/astro/lunar/model/SolarTermType;Ljava/time/LocalDateTime;)Lnet/plumt/astro/lunar/model/SolarTerm;
-	public static synthetic fun copy$default (Lnet/plumt/astro/lunar/model/SolarTerm;Lnet/plumt/astro/lunar/model/SolarTermType;Ljava/time/LocalDateTime;ILjava/lang/Object;)Lnet/plumt/astro/lunar/model/SolarTerm;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getDateTime ()Ljava/time/LocalDateTime;
 	public final fun getDay ()I
@@ -214,10 +234,11 @@ public final class net/plumt/astro/lunar/model/SolarTerm {
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class net/plumt/astro/lunar/model/SolarTermType : java/lang/Enum {
+public final class net/plumt/astro/lunar/model/SolarTermType {
 	public static final field AUTUMN_EQUINOX Lnet/plumt/astro/lunar/model/SolarTermType;
 	public static final field AWAKENING_OF_INSECTS Lnet/plumt/astro/lunar/model/SolarTermType;
 	public static final field COLD_DEW Lnet/plumt/astro/lunar/model/SolarTermType;
+	public static final field Companion Lnet/plumt/astro/lunar/model/SolarTermType$Companion;
 	public static final field FROST_DESCENT Lnet/plumt/astro/lunar/model/SolarTermType;
 	public static final field GRAIN_FULL Lnet/plumt/astro/lunar/model/SolarTermType;
 	public static final field GRAIN_IN_EAR Lnet/plumt/astro/lunar/model/SolarTermType;
@@ -239,20 +260,20 @@ public final class net/plumt/astro/lunar/model/SolarTermType : java/lang/Enum {
 	public static final field SUMMER_SOLSTICE Lnet/plumt/astro/lunar/model/SolarTermType;
 	public static final field WHITE_DEW Lnet/plumt/astro/lunar/model/SolarTermType;
 	public static final field WINTER_SOLSTICE Lnet/plumt/astro/lunar/model/SolarTermType;
+	public synthetic fun <init> (Ljava/lang/String;DLjava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun getEclipticLongitude ()D
-	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getKoreanName ()Ljava/lang/String;
-	public static fun valueOf (Ljava/lang/String;)Lnet/plumt/astro/lunar/model/SolarTermType;
-	public static fun values ()[Lnet/plumt/astro/lunar/model/SolarTermType;
+	public final fun getName ()Ljava/lang/String;
+	public static final fun getValues ()Ljava/util/List;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class net/plumt/astro/lunar/model/SolarTermType$Companion {
+	public final fun getValues ()Ljava/util/List;
 }
 
 public final class net/plumt/astro/lunar/model/SpecialFullMoon {
 	public fun <init> (Ljava/time/LocalDateTime;DLnet/plumt/astro/lunar/model/SpecialMoonType;)V
-	public final fun component1 ()Ljava/time/LocalDateTime;
-	public final fun component2 ()D
-	public final fun component3 ()Lnet/plumt/astro/lunar/model/SpecialMoonType;
-	public final fun copy (Ljava/time/LocalDateTime;DLnet/plumt/astro/lunar/model/SpecialMoonType;)Lnet/plumt/astro/lunar/model/SpecialFullMoon;
-	public static synthetic fun copy$default (Lnet/plumt/astro/lunar/model/SpecialFullMoon;Ljava/time/LocalDateTime;DLnet/plumt/astro/lunar/model/SpecialMoonType;ILjava/lang/Object;)Lnet/plumt/astro/lunar/model/SpecialFullMoon;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getDateTime ()Ljava/time/LocalDateTime;
 	public final fun getDay ()I
@@ -266,11 +287,6 @@ public final class net/plumt/astro/lunar/model/SpecialFullMoon {
 
 public final class net/plumt/astro/lunar/model/SpecialMoonEvent {
 	public fun <init> (Lnet/plumt/astro/lunar/model/SpecialMoonEventType;Ljava/time/LocalDateTime;Ljava/lang/Double;)V
-	public final fun component1 ()Lnet/plumt/astro/lunar/model/SpecialMoonEventType;
-	public final fun component2 ()Ljava/time/LocalDateTime;
-	public final fun component3 ()Ljava/lang/Double;
-	public final fun copy (Lnet/plumt/astro/lunar/model/SpecialMoonEventType;Ljava/time/LocalDateTime;Ljava/lang/Double;)Lnet/plumt/astro/lunar/model/SpecialMoonEvent;
-	public static synthetic fun copy$default (Lnet/plumt/astro/lunar/model/SpecialMoonEvent;Lnet/plumt/astro/lunar/model/SpecialMoonEventType;Ljava/time/LocalDateTime;Ljava/lang/Double;ILjava/lang/Object;)Lnet/plumt/astro/lunar/model/SpecialMoonEvent;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getDateTime ()Ljava/time/LocalDateTime;
 	public final fun getDistanceKm ()Ljava/lang/Double;
@@ -279,21 +295,58 @@ public final class net/plumt/astro/lunar/model/SpecialMoonEvent {
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class net/plumt/astro/lunar/model/SpecialMoonEventType : java/lang/Enum {
-	public static final field BLUE_MOON Lnet/plumt/astro/lunar/model/SpecialMoonEventType;
-	public static final field MINIMOON Lnet/plumt/astro/lunar/model/SpecialMoonEventType;
-	public static final field SUPERMOON Lnet/plumt/astro/lunar/model/SpecialMoonEventType;
-	public static fun getEntries ()Lkotlin/enums/EnumEntries;
-	public static fun valueOf (Ljava/lang/String;)Lnet/plumt/astro/lunar/model/SpecialMoonEventType;
-	public static fun values ()[Lnet/plumt/astro/lunar/model/SpecialMoonEventType;
+public abstract class net/plumt/astro/lunar/model/SpecialMoonEventType {
+	public static final field Companion Lnet/plumt/astro/lunar/model/SpecialMoonEventType$Companion;
+	public static final fun getValues ()Ljava/util/List;
 }
 
-public final class net/plumt/astro/lunar/model/SpecialMoonType : java/lang/Enum {
-	public static final field MINIMOON Lnet/plumt/astro/lunar/model/SpecialMoonType;
-	public static final field SUPERMOON Lnet/plumt/astro/lunar/model/SpecialMoonType;
-	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+public final class net/plumt/astro/lunar/model/SpecialMoonEventType$BlueMoon : net/plumt/astro/lunar/model/SpecialMoonEventType {
+	public static final field INSTANCE Lnet/plumt/astro/lunar/model/SpecialMoonEventType$BlueMoon;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class net/plumt/astro/lunar/model/SpecialMoonEventType$Companion {
+	public final fun getValues ()Ljava/util/List;
+}
+
+public final class net/plumt/astro/lunar/model/SpecialMoonEventType$Minimoon : net/plumt/astro/lunar/model/SpecialMoonEventType {
+	public static final field INSTANCE Lnet/plumt/astro/lunar/model/SpecialMoonEventType$Minimoon;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class net/plumt/astro/lunar/model/SpecialMoonEventType$Supermoon : net/plumt/astro/lunar/model/SpecialMoonEventType {
+	public static final field INSTANCE Lnet/plumt/astro/lunar/model/SpecialMoonEventType$Supermoon;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract class net/plumt/astro/lunar/model/SpecialMoonType {
+	public static final field Companion Lnet/plumt/astro/lunar/model/SpecialMoonType$Companion;
+	public synthetic fun <init> (Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun getKoreanName ()Ljava/lang/String;
-	public static fun valueOf (Ljava/lang/String;)Lnet/plumt/astro/lunar/model/SpecialMoonType;
-	public static fun values ()[Lnet/plumt/astro/lunar/model/SpecialMoonType;
+	public static final fun getValues ()Ljava/util/List;
+}
+
+public final class net/plumt/astro/lunar/model/SpecialMoonType$Companion {
+	public final fun getValues ()Ljava/util/List;
+}
+
+public final class net/plumt/astro/lunar/model/SpecialMoonType$Minimoon : net/plumt/astro/lunar/model/SpecialMoonType {
+	public static final field INSTANCE Lnet/plumt/astro/lunar/model/SpecialMoonType$Minimoon;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class net/plumt/astro/lunar/model/SpecialMoonType$Supermoon : net/plumt/astro/lunar/model/SpecialMoonType {
+	public static final field INSTANCE Lnet/plumt/astro/lunar/model/SpecialMoonType$Supermoon;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
 }
 

@@ -20,7 +20,7 @@ internal object MoonTodayCalculator {
         val thisMonthEvents = algorithm.calculate(today.year, today.monthValue)
         val todayEvent = thisMonthEvents.firstOrNull { it.dateTime.dayOfMonth == today.dayOfMonth }
         val upcoming = upcomingEvents(now, algorithm)
-        val nextFullMoon = upcoming.firstOrNull { it.type == LunarPhaseType.FULL_MOON }
+        val nextFullMoon = upcoming.firstOrNull { it.type == LunarPhaseType.FullMoon }
 
         // 오늘 든 보름달이 블루문이거나, 다가오는 보름달이 블루문이면 참
         val blueMoonComing = listOfNotNull(todayEvent, nextFullMoon).any { BlueMoonDetector.isBlueMoon(it, algorithm) }
@@ -31,8 +31,8 @@ internal object MoonTodayCalculator {
             illuminationPercent = illuminationPercent(phase),
             todayEventType = todayEvent?.type,
             upcomingEvents = upcoming,
-            daysUntilFullMoon = daysUntil(today, LunarPhaseType.FULL_MOON, thisMonthEvents, algorithm),
-            daysUntilNewMoon = daysUntil(today, LunarPhaseType.NEW_MOON, thisMonthEvents, algorithm),
+            daysUntilFullMoon = daysUntil(today, LunarPhaseType.FullMoon, thisMonthEvents, algorithm),
+            daysUntilNewMoon = daysUntil(today, LunarPhaseType.NewMoon, thisMonthEvents, algorithm),
             isBlueMoonComing = blueMoonComing,
         )
     }

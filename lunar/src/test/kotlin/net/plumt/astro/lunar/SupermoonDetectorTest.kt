@@ -31,7 +31,9 @@ class SupermoonDetectorTest {
         listOf(2024, 2025, 2026).forEach { year ->
             val distances = SupermoonDetector.fullMoonSamples(year, phaseAlgorithm, distanceAlgorithm)
             assertTrue("$year 보름달 12~13회", distances.size in 12..14)
-            distances.forEach { (kst, dist) ->
+            distances.forEach { sample ->
+                val kst = sample.dateTime
+                val dist = sample.distanceKm
                 assertTrue(
                     "$year $kst 거리 ${"%.0f".format(dist)}km 범위 이탈",
                     dist in 356_000.0..407_000.0,
@@ -43,7 +45,7 @@ class SupermoonDetectorTest {
     @Test
     fun `2024년에 슈퍼문이 존재한다`() {
         val specials = SupermoonDetector.classify(2024, phaseAlgorithm, distanceAlgorithm, DistanceThresholdCriteria())
-        val supermoons = specials.filter { it.type == SpecialMoonType.SUPERMOON }
+        val supermoons = specials.filter { it.type == SpecialMoonType.Supermoon }
         assertTrue("2024 슈퍼문 1회 이상", supermoons.isNotEmpty())
     }
 
@@ -69,7 +71,7 @@ class SupermoonDetectorTest {
     @Test
     fun `2024년에 미니문이 1회 이상 검출된다`() {
         val specials = SupermoonDetector.classify(2024, phaseAlgorithm, distanceAlgorithm, DistanceThresholdCriteria())
-        val minimoons = specials.filter { it.type == SpecialMoonType.MINIMOON }
+        val minimoons = specials.filter { it.type == SpecialMoonType.Minimoon }
         assertTrue("2024 미니문 1회 이상", minimoons.isNotEmpty())
     }
 }

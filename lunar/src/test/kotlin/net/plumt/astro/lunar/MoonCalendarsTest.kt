@@ -28,7 +28,7 @@ class MoonCalendarsTest {
     fun `이번 달에 남은 위상이 없으면 다음 달 첫 위상까지 센다`() {
         // 2026년 10월 보름달은 26일이라 28일에는 이번 달에 남은 보름달이 없다
         val now = LocalDateTime.of(2026, 10, 28, 12, 0)
-        val nextFullMoonDay = meeus.calculate(2026, 11).first { it.type == LunarPhaseType.FULL_MOON }.day
+        val nextFullMoonDay = meeus.calculate(2026, 11).first { it.type == LunarPhaseType.FullMoon }.day
         assertEquals((31 - 28) + nextFullMoonDay, MoonTodayCalculator.at(now, meeus).daysUntilFullMoon)
     }
 
@@ -46,14 +46,14 @@ class MoonCalendarsTest {
         val days = MonthlyMoonCalendar.days(2023, 8, meeus)
         assertEquals(31, days.size)
         assertEquals(listOf(31), days.filter { it.isBlueMoon }.map { it.dateTime.dayOfMonth })
-        assertEquals(LunarPhaseType.FULL_MOON, days[30].event?.type)
+        assertEquals(LunarPhaseType.FullMoon, days[30].event?.type)
         assertFalse(days[0].isBlueMoon)
     }
 
     @Test
     fun `특별한 달은 거리로 고른 달과 블루문을 시간순으로 합친다`() {
         val specials = SpecialMoonCalendar.ofYear(2023, emptyList(), meeus)
-        assertEquals(listOf(SpecialMoonEventType.BLUE_MOON), specials.map { it.type })
+        assertEquals(listOf(SpecialMoonEventType.BlueMoon), specials.map { it.type })
         assertEquals(null, specials.single().distanceKm)
         assertEquals(31, specials.single().dateTime.dayOfMonth)
     }

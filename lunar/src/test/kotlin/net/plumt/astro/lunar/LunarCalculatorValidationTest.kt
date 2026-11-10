@@ -37,7 +37,7 @@ class LunarCalculatorValidationTest {
         listOf(0, 13, -1, Int.MAX_VALUE).forEach { month ->
             val e = assertThrows<IllegalArgumentException> { lunar.phasesOfMonth(2026, month) }
             assertTrue(e.message!!.contains("month($month)"))
-            assertThrows<IllegalArgumentException> { lunar.phaseEventsInMonth(2026, month, LunarPhaseType.FULL_MOON) }
+            assertThrows<IllegalArgumentException> { lunar.phaseEventsInMonth(2026, month, LunarPhaseType.FullMoon) }
             assertThrows<IllegalArgumentException> { lunar.monthCalendar(2026, month) }
         }
     }
@@ -48,7 +48,7 @@ class LunarCalculatorValidationTest {
         val above = LunarCalculator.MAX_YEAR + 1
         listOf(below, above, -5000, 100_000, Int.MIN_VALUE, Int.MAX_VALUE).forEach { year ->
             assertThrows<IllegalArgumentException> { lunar.phasesOfMonth(year, 1) }
-            assertThrows<IllegalArgumentException> { lunar.phaseEventsInMonth(year, 1, LunarPhaseType.NEW_MOON) }
+            assertThrows<IllegalArgumentException> { lunar.phaseEventsInMonth(year, 1, LunarPhaseType.NewMoon) }
             assertThrows<IllegalArgumentException> { lunar.monthCalendar(year, 1) }
             assertThrows<IllegalArgumentException> { lunar.specialFullMoons(year) }
             assertThrows<IllegalArgumentException> { lunar.specialMoonsOfYear(year) }
@@ -63,7 +63,7 @@ class LunarCalculatorValidationTest {
             assertThrows<IllegalArgumentException> { lunar.riseSet(date) }
             assertThrows<IllegalArgumentException> { lunar.riseSetsOfMonth(YearMonth.of(year, 6)) }
             assertThrows<IllegalArgumentException> {
-                lunar.isBlueMoon(LunarPhaseEvent(LunarPhaseType.FULL_MOON, date.atStartOfDay()))
+                lunar.isBlueMoon(LunarPhaseEvent(LunarPhaseType.FullMoon, date.atStartOfDay()))
             }
         }
         assertThrows<IllegalArgumentException> { lunar.phaseAt(LocalDateTime.MAX) }
@@ -74,7 +74,7 @@ class LunarCalculatorValidationTest {
     @Test
     fun `지원 범위 양 끝에서 모든 함수가 정상 값을 낸다`() {
         val zones = listOf(LunarCalculatorConfig.KST, ZoneOffset.UTC, ZoneId.of("Pacific/Kiritimati"), ZoneId.of("Pacific/Pago_Pago"))
-        zones.map { LunarCalculator.create(LunarCalculatorConfig(zone = it)) }.forEach { calc ->
+        zones.map { LunarCalculator.create(LunarCalculatorConfig.builder().zone(it).build()) }.forEach { calc ->
             listOf(
                 LocalDateTime.of(LunarCalculator.MIN_YEAR, 1, 1, 0, 0),
                 LocalDateTime.of(LunarCalculator.MAX_YEAR, 12, 31, 23, 59, 59),
@@ -86,7 +86,7 @@ class LunarCalculatorValidationTest {
                 assertTrue(calc.lunarDayOf(at.toLocalDate()) in 1..30)
                 assertTrue(calc.moonToday(at).lunarDay in 1..30)
                 assertEquals(at.toLocalDate().lengthOfMonth(), calc.monthCalendar(y, m).size)
-                calc.phaseEventsInMonth(y, m, LunarPhaseType.FULL_MOON).forEach { calc.isBlueMoon(it) }
+                calc.phaseEventsInMonth(y, m, LunarPhaseType.FullMoon).forEach { calc.isBlueMoon(it) }
                 calc.specialMoonsOfYear(y)
                 assertTrue(calc.distanceKm(at) in 350_000.0..410_000.0)
                 calc.riseSet(at.toLocalDate())
@@ -120,17 +120,17 @@ class LunarCalculatorValidationTest {
     @Test
     fun `임계값이 양의 유한한 수가 아니면 기준을 만들 수 없다`() {
         listOf(Double.NaN, -1.0, 0.0, Double.NEGATIVE_INFINITY).forEach { v ->
-            assertThrows<IllegalArgumentException> { DistanceThresholdCriteria(supermoonMaxKm = v) }
+            assertThrows<IllegalArgumentException> { DistanceThresholdCriteria().withSupermoonMaxKm(v) }
         }
         listOf(Double.NaN, Double.POSITIVE_INFINITY).forEach { v ->
-            assertThrows<IllegalArgumentException> { DistanceThresholdCriteria(minimoonMinKm = v) }
+            assertThrows<IllegalArgumentException> { DistanceThresholdCriteria().withMinimoonMinKm(v) }
         }
     }
 
     @Test
     fun `교체한 판정 기준이 던진 예외는 원인을 담은 LunarCalculationException 이 된다`() {
         val boom = IllegalStateException("boom")
-        val failing = LunarCalculator.create(LunarCalculatorConfig(specialMoonCriteria = { throw boom }))
+        val failing = LunarCalculator.create(LunarCalculatorConfig.builder().specialMoonCriteria { throw boom }.build())
         val e = assertThrows<LunarCalculationException> { failing.specialFullMoons(2024) }
         assertSame(boom, e.cause)
         assertThrows<LunarCalculationException> { failing.specialMoonsOfYear(2024) }
@@ -138,8 +138,8 @@ class LunarCalculatorValidationTest {
 
     @Test
     fun `교체한 판정 기준이 정상이면 예외 없이 분류한다`() {
-        val onlyMini = LunarCalculator.create(LunarCalculatorConfig(specialMoonCriteria = { SpecialMoonType.MINIMOON }))
-        assertTrue(onlyMini.specialFullMoons(2024).all { it.type == SpecialMoonType.MINIMOON })
+        val onlyMini = LunarCalculator.create(LunarCalculatorConfig.builder().specialMoonCriteria { SpecialMoonType.Minimoon }.build())
+        assertTrue(onlyMini.specialFullMoons(2024).all { it.type == SpecialMoonType.Minimoon })
     }
 
     @Test

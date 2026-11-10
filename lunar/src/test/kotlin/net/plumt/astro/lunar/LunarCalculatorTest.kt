@@ -14,7 +14,7 @@ import java.time.ZoneOffset
 class LunarCalculatorTest {
 
     private val kst = LunarCalculator.create()
-    private val utc = LunarCalculator.create(LunarCalculatorConfig(zone = ZoneOffset.UTC))
+    private val utc = LunarCalculator.create(LunarCalculatorConfig.builder().zone(ZoneOffset.UTC).build())
 
     @Test
     fun `기본 시간대는 한국 표준시다`() {
@@ -24,15 +24,15 @@ class LunarCalculatorTest {
     @Test
     fun `한 달 위상은 4종이 하나씩 시각순으로 나온다`() {
         val events = kst.phasesOfMonth(2026, 1)
-        assertEquals(LunarPhaseType.entries.toSet(), events.map { it.type }.toSet())
+        assertEquals(LunarPhaseType.values.toSet(), events.map { it.type }.toSet())
         assertEquals(events.sortedBy { it.dateTime }, events)
     }
 
     @Test
     fun `시간대를 바꾸면 같은 순간이 그 시간대 현지 시각으로 나온다`() {
         // 2026년 1월 보름달은 월 경계에서 멀어 두 시간대 모두 1월에 든다
-        val kstFull = kst.phaseEventsInMonth(2026, 1, LunarPhaseType.FULL_MOON).single()
-        val utcFull = utc.phaseEventsInMonth(2026, 1, LunarPhaseType.FULL_MOON).single()
+        val kstFull = kst.phaseEventsInMonth(2026, 1, LunarPhaseType.FullMoon).single()
+        val utcFull = utc.phaseEventsInMonth(2026, 1, LunarPhaseType.FullMoon).single()
         assertEquals(Duration.ofHours(9), Duration.between(utcFull.dateTime, kstFull.dateTime))
     }
 
@@ -49,12 +49,12 @@ class LunarCalculatorTest {
     @Test
     fun `기본 기준에서 슈퍼문은 360000km 이하, 미니문은 405000km 이상이다`() {
         val specials = kst.specialFullMoons(2024)
-        assertTrue(specials.any { it.type == SpecialMoonType.SUPERMOON })
-        assertTrue(specials.any { it.type == SpecialMoonType.MINIMOON })
+        assertTrue(specials.any { it.type == SpecialMoonType.Supermoon })
+        assertTrue(specials.any { it.type == SpecialMoonType.Minimoon })
         specials.forEach {
             when (it.type) {
-                SpecialMoonType.SUPERMOON -> assertTrue(it.distanceKm <= DistanceThresholdCriteria.DEFAULT_SUPERMOON_MAX_KM)
-                SpecialMoonType.MINIMOON -> assertTrue(it.distanceKm >= DistanceThresholdCriteria.DEFAULT_MINIMOON_MIN_KM)
+                SpecialMoonType.Supermoon -> assertTrue(it.distanceKm <= DistanceThresholdCriteria.DEFAULT_SUPERMOON_MAX_KM)
+                SpecialMoonType.Minimoon -> assertTrue(it.distanceKm >= DistanceThresholdCriteria.DEFAULT_MINIMOON_MIN_KM)
             }
             assertEquals(2024, it.year)
         }
@@ -63,20 +63,20 @@ class LunarCalculatorTest {
 
     @Test
     fun `판정 기준을 바꿔 끼우면 그 기준으로 분류한다`() {
-        val everySuper = LunarCalculator.create(LunarCalculatorConfig(specialMoonCriteria = { SpecialMoonType.SUPERMOON }))
-        val fullMoons = (1..12).flatMap { kst.phaseEventsInMonth(2024, it, LunarPhaseType.FULL_MOON) }
+        val everySuper = LunarCalculator.create(LunarCalculatorConfig.builder().specialMoonCriteria { SpecialMoonType.Supermoon }.build())
+        val fullMoons = (1..12).flatMap { kst.phaseEventsInMonth(2024, it, LunarPhaseType.FullMoon) }
         val specials = everySuper.specialFullMoons(2024)
         assertEquals(fullMoons.size, specials.size)
-        assertTrue(specials.all { it.type == SpecialMoonType.SUPERMOON })
+        assertTrue(specials.all { it.type == SpecialMoonType.Supermoon })
     }
 
     @Test
     fun `임계값 기준을 좁히면 슈퍼문이 줄어든다`() {
         val strict = LunarCalculator.create(
-            LunarCalculatorConfig(specialMoonCriteria = DistanceThresholdCriteria(supermoonMaxKm = 357_000.0)),
+            LunarCalculatorConfig.builder().specialMoonCriteria(DistanceThresholdCriteria().withSupermoonMaxKm(357_000.0)).build(),
         )
-        val defaultCount = kst.specialFullMoons(2024).count { it.type == SpecialMoonType.SUPERMOON }
-        val strictCount = strict.specialFullMoons(2024).count { it.type == SpecialMoonType.SUPERMOON }
+        val defaultCount = kst.specialFullMoons(2024).count { it.type == SpecialMoonType.Supermoon }
+        val strictCount = strict.specialFullMoons(2024).count { it.type == SpecialMoonType.Supermoon }
         assertTrue(strictCount < defaultCount)
     }
 

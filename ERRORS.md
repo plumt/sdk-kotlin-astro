@@ -18,6 +18,8 @@
 | `LunarCalculationException` | 교체한 `SpecialMoonCriteria` 가 예외를 던졌을 때 — 원래 예외가 `cause` 다 | 기준 구현을 고친다 |
 | `LunarCalculationException` | 내부 계산이 끝나지 못했을 때(지원 범위 안에서는 나지 않아야 한다) | 입력값과 함께 이슈로 알린다 |
 
+시험용 `FakeLunarCalculator` 는 `failWith` 로 준 예외를 인자 검사보다 먼저 그대로 던진다. 실제 계산기는 위 두 종류만 던진다.
+
 예외 메시지에는 받은 값과 허용 범위가 들어간다. 메시지 문구는 바뀔 수 있으니 분기는 예외 타입으로 한다.
 
 ### 값으로 알리는 신호

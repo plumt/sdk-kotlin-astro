@@ -43,7 +43,7 @@ internal class SolarTermAlgorithm(
     fun solarTermsOfYear(year: Int): List<SolarTerm> {
         val deltaTSeconds = if (applyDeltaT) AstroTime.estimateDeltaT(year) else 0.0
 
-        return SolarTermType.entries
+        return SolarTermType.values
             .map { type -> SolarTerm(type, findSolarTerm(year, type, deltaTSeconds)) }
             .sortedBy { it.dateTime }
     }

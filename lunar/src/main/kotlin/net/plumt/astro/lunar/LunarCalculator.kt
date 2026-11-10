@@ -32,7 +32,7 @@ import java.time.ZoneId
  *
  * ```
  * val lunar = LunarCalculator.create()                                   // 한국 표준시
- * val utc = LunarCalculator.create(LunarCalculatorConfig(zone = ZoneOffset.UTC))
+ * val utc = LunarCalculator.create(LunarCalculatorConfig.builder().zone(ZoneOffset.UTC).build())
  * lunar.phasesOfMonth(2026, 11)
  * ```
  */
@@ -72,15 +72,22 @@ public interface LunarCalculator {
     /** [dateTime] 의 지구-달 중심 거리(km). */
     public fun distanceKm(dateTime: LocalDateTime): Double
 
-    /** [date] 하루(현지 0시~24시)의 월출·월몰. */
-    public fun riseSet(date: LocalDate, location: GeoLocation = GeoLocation.SEOUL): MoonRiseSet
+    /** [date] 하루(현지 0시~24시)의 [GeoLocation.SEOUL] 월출·월몰. */
+    public fun riseSet(date: LocalDate): MoonRiseSet = riseSet(date, GeoLocation.SEOUL)
 
-    /** 그 달 1일~말일의 월출·월몰(인덱스 0 이 1일). */
-    public fun riseSetsOfMonth(yearMonth: YearMonth, location: GeoLocation = GeoLocation.SEOUL): List<MoonRiseSet>
+    /** [date] 하루(현지 0시~24시)의 [location] 월출·월몰. */
+    public fun riseSet(date: LocalDate, location: GeoLocation): MoonRiseSet
+
+    /** 그 달 1일~말일의 [GeoLocation.SEOUL] 월출·월몰(인덱스 0 이 1일). */
+    public fun riseSetsOfMonth(yearMonth: YearMonth): List<MoonRiseSet> = riseSetsOfMonth(yearMonth, GeoLocation.SEOUL)
+
+    /** 그 달 1일~말일의 [location] 월출·월몰(인덱스 0 이 1일). */
+    public fun riseSetsOfMonth(yearMonth: YearMonth, location: GeoLocation): List<MoonRiseSet>
 
     /** 그해 24절기. 소한부터 동지까지 시각 오름차순이다. */
     public fun solarTermsOfYear(year: Int): List<SolarTerm>
 
+    /** 지원 범위와 팩토리. */
     public companion object {
         /** 계산을 받는 가장 이른 연도. */
         public const val MIN_YEAR: Int = 1900
@@ -88,8 +95,12 @@ public interface LunarCalculator {
         /** 계산을 받는 가장 늦은 연도. */
         public const val MAX_YEAR: Int = 2100
 
-        /** [config] 로 계산기를 만든다. 기본값은 한국 표준시와 거리 기준 슈퍼문·미니문이다. */
-        public fun create(config: LunarCalculatorConfig = LunarCalculatorConfig()): LunarCalculator =
-            DefaultLunarCalculator(config)
+        /** 기본 설정(한국 표준시, 거리 기준 슈퍼문·미니문)의 계산기를 만든다. */
+        @JvmStatic
+        public fun create(): LunarCalculator = create(LunarCalculatorConfig.builder().build())
+
+        /** [config] 로 계산기를 만든다. */
+        @JvmStatic
+        public fun create(config: LunarCalculatorConfig): LunarCalculator = DefaultLunarCalculator(config)
     }
 }

@@ -28,7 +28,7 @@ internal object SupermoonDetector {
         distanceAlgorithm: MoonDistanceAlgorithm,
     ): List<FullMoonSample> =
         (1..12)
-            .flatMap { month -> phaseAlgorithm.eventsOfTypeInMonth(year, month, LunarPhaseType.FULL_MOON) }
+            .flatMap { month -> phaseAlgorithm.eventsOfTypeInMonth(year, month, LunarPhaseType.FullMoon) }
             .distinctBy { it.dateTime }
             .sortedBy { it.dateTime }
             .map { FullMoonSample(it.dateTime, distanceAlgorithm.distanceKm(it.dateTime)) }

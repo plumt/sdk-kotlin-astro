@@ -21,7 +21,7 @@ class LunarModelTest {
     fun `given 이벤트 시각이면 when 파생 프로퍼티 then 연월일시분으로 분해된다`() {
         // given
         val event = LunarPhaseEvent(
-            type = LunarPhaseType.FULL_MOON,
+            type = LunarPhaseType.FullMoon,
             dateTime = LocalDateTime.of(2026, 1, 3, 19, 3),
         )
 
@@ -41,7 +41,7 @@ class LunarModelTest {
         val moon = SpecialFullMoon(
             dateTime = LocalDateTime.of(2026, 11, 5, 22, 19),
             distanceKm = 356_980.0,
-            type = SpecialMoonType.SUPERMOON,
+            type = SpecialMoonType.Supermoon,
         )
 
         // when / then
@@ -55,15 +55,15 @@ class LunarModelTest {
     @Test
     fun `given 위상 타입이면 when kFraction 확인 then 위상 순서대로 0 025 05 075다`() {
         // then
-        assertEquals(0.0, LunarPhaseType.NEW_MOON.kFraction, 0.0)
-        assertEquals(0.25, LunarPhaseType.FIRST_QUARTER.kFraction, 0.0)
-        assertEquals(0.5, LunarPhaseType.FULL_MOON.kFraction, 0.0)
-        assertEquals(0.75, LunarPhaseType.LAST_QUARTER.kFraction, 0.0)
+        assertEquals(0.0, LunarPhaseType.NewMoon.kFraction, 0.0)
+        assertEquals(0.25, LunarPhaseType.FirstQuarter.kFraction, 0.0)
+        assertEquals(0.5, LunarPhaseType.FullMoon.kFraction, 0.0)
+        assertEquals(0.75, LunarPhaseType.LastQuarter.kFraction, 0.0)
     }
 
     @Test
     fun `given 위상 타입 enum이면 when 개수 확인 then 4종이다`() {
         // then
-        assertEquals("위상은 삭/상현/망/하현 4종", 4, LunarPhaseType.entries.size)
+        assertEquals("위상은 삭/상현/망/하현 4종", 4, LunarPhaseType.values.size)
     }
 }

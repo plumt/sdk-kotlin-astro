@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">astro sample</string>
+    <string name="ready">버튼을 눌러 공개 메서드를 불러 본다</string>
+    <string name="phases">phasesOfMonth · phaseEventsInMonth</string>
+    <string name="phase_at">phaseAt · lunarDayOf · distanceKm</string>
+    <string name="today">moonToday · isBlueMoon</string>
+    <string name="calendar">monthCalendar</string>
+    <string name="special">specialFullMoons · specialMoonsOfYear</string>
+    <string name="rise_set">riseSet · riseSetsOfMonth</string>
+    <string name="solar_terms">solarTermsOfYear</string>
+    <string name="utc">UTC 계산기 · 바꾼 슈퍼문 기준</string>
+    <string name="invalid">틀린 인자(연도 1800·월 13·위도 91)</string>
+</resources>

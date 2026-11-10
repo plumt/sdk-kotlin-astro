@@ -16,14 +16,14 @@ internal object SpecialMoonCalendar {
     fun ofYear(year: Int, specialFullMoons: List<SpecialFullMoon>, algorithm: MeeusChapter49Algorithm): List<SpecialMoonEvent> {
         val byDistance = specialFullMoons.map { moon ->
             val type = when (moon.type) {
-                SpecialMoonType.SUPERMOON -> SpecialMoonEventType.SUPERMOON
-                SpecialMoonType.MINIMOON -> SpecialMoonEventType.MINIMOON
+                SpecialMoonType.Supermoon -> SpecialMoonEventType.Supermoon
+                SpecialMoonType.Minimoon -> SpecialMoonEventType.Minimoon
             }
             SpecialMoonEvent(type, moon.dateTime, moon.distanceKm)
         }
         val blueMoons = (1..12)
             .mapNotNull { month -> BlueMoonDetector.findBlueMoon(year, month, algorithm) }
-            .map { SpecialMoonEvent(SpecialMoonEventType.BLUE_MOON, it.dateTime, distanceKm = null) }
+            .map { SpecialMoonEvent(SpecialMoonEventType.BlueMoon, it.dateTime, distanceKm = null) }
         return (byDistance + blueMoons).sortedBy { it.dateTime }
     }
 }

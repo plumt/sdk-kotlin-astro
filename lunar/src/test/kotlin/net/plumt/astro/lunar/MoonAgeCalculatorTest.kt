@@ -18,7 +18,7 @@ class MoonAgeCalculatorTest {
     private val meeus = MeeusChapter49Algorithm(LunarCalculatorConfig.KST)
 
     private fun newMoons(year: Int, month: Int) =
-        meeus.eventsOfTypeInMonth(year, month, LunarPhaseType.NEW_MOON).map { it.dateTime }
+        meeus.eventsOfTypeInMonth(year, month, LunarPhaseType.NewMoon).map { it.dateTime }
 
     @Test
     fun `삭 시각의 위상은 0 이다`() {
@@ -50,7 +50,7 @@ class MoonAgeCalculatorTest {
     @Test
     fun `망 시각의 위상은 절반 부근이다`() {
         // 달이 등속이 아니라 정확히 0.5 는 아니다. 절반에서 크게 벗어나면 삭을 잘못 잡은 것이다.
-        val fullMoon = meeus.eventsOfTypeInMonth(2026, 3, LunarPhaseType.FULL_MOON).first().dateTime
+        val fullMoon = meeus.eventsOfTypeInMonth(2026, 3, LunarPhaseType.FullMoon).first().dateTime
         val phase = MoonAgeCalculator.phaseAt(fullMoon, meeus)
         assertTrue("망은 0.45~0.55 사이여야 한다: $phase", phase in 0.45..0.55)
     }
@@ -86,7 +86,7 @@ class MoonAgeCalculatorTest {
 
     @Test
     fun `삭이 든 날은 시각과 무관하게 1일이고 다음 날은 2일이다`() {
-        val newMoon = meeus.eventsOfTypeInMonth(2026, 2, LunarPhaseType.NEW_MOON).first().dateTime.toLocalDate()
+        val newMoon = meeus.eventsOfTypeInMonth(2026, 2, LunarPhaseType.NewMoon).first().dateTime.toLocalDate()
 
         assertEquals(1, MoonAgeCalculator.lunarDayOf(newMoon, meeus))
         assertEquals(2, MoonAgeCalculator.lunarDayOf(newMoon.plusDays(1), meeus))
@@ -94,7 +94,7 @@ class MoonAgeCalculatorTest {
 
     @Test
     fun `삭 전날은 그 달의 마지막 날(29 또는 30일)이다`() {
-        val newMoon = meeus.eventsOfTypeInMonth(2026, 2, LunarPhaseType.NEW_MOON).first().dateTime.toLocalDate()
+        val newMoon = meeus.eventsOfTypeInMonth(2026, 2, LunarPhaseType.NewMoon).first().dateTime.toLocalDate()
 
         assertTrue(MoonAgeCalculator.lunarDayOf(newMoon.minusDays(1), meeus) in 29..30)
     }

@@ -20,7 +20,7 @@ class BlueMoonDetectorTest {
 
     @Test
     fun `2023년 8월은 두 번째 보름달만 블루문이다`() {
-        val fullMoons = algorithm.eventsOfTypeInMonth(2023, 8, LunarPhaseType.FULL_MOON)
+        val fullMoons = algorithm.eventsOfTypeInMonth(2023, 8, LunarPhaseType.FullMoon)
         assertEquals(2, fullMoons.size)
         assertFalse(BlueMoonDetector.isBlueMoon(fullMoons.first(), algorithm))
         assertTrue(BlueMoonDetector.isBlueMoon(fullMoons.last(), algorithm))
@@ -29,7 +29,7 @@ class BlueMoonDetectorTest {
 
     @Test
     fun `보름달이 아닌 위상은 블루문이 아니다`() {
-        val newMoon = algorithm.eventsOfTypeInMonth(2023, 8, LunarPhaseType.NEW_MOON).first()
+        val newMoon = algorithm.eventsOfTypeInMonth(2023, 8, LunarPhaseType.NewMoon).first()
         assertFalse(BlueMoonDetector.isBlueMoon(newMoon, algorithm))
     }
 
@@ -47,16 +47,16 @@ class BlueMoonDetectorTest {
 
     @Test
     fun `eventsOfTypeInMonth 는 그 연월 보름달만 시각순으로 돌려준다`() {
-        val fullMoons = algorithm.eventsOfTypeInMonth(2026, 1, LunarPhaseType.FULL_MOON)
+        val fullMoons = algorithm.eventsOfTypeInMonth(2026, 1, LunarPhaseType.FullMoon)
         assertTrue(fullMoons.isNotEmpty())
-        assertTrue(fullMoons.all { it.year == 2026 && it.month == 1 && it.type == LunarPhaseType.FULL_MOON })
+        assertTrue(fullMoons.all { it.year == 2026 && it.month == 1 && it.type == LunarPhaseType.FullMoon })
         assertEquals(fullMoons.sortedBy { it.dateTime }, fullMoons)
     }
 
     @Test
     fun `한 해 전체에서 보름달이 두 번인 달만 블루문을 돌려준다`() {
         (1..12).forEach { month ->
-            val fulls = algorithm.eventsOfTypeInMonth(2026, month, LunarPhaseType.FULL_MOON)
+            val fulls = algorithm.eventsOfTypeInMonth(2026, month, LunarPhaseType.FullMoon)
             val blueMoon = BlueMoonDetector.findBlueMoon(2026, month, algorithm)
             if (fulls.size >= 2) assertEquals(fulls.last().dateTime, blueMoon?.dateTime) else assertNull(blueMoon)
         }

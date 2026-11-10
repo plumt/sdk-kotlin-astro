@@ -6,4 +6,10 @@ package net.plumt.astro.lunar
  * 내부 계산의 예외와 교체한 [SpecialMoonCriteria] 가 던진 예외는 이 타입으로 감싸 [cause] 에 원인을 담는다.
  * 인자가 틀린 경우는 이 타입이 아니라 [IllegalArgumentException] 이다.
  */
-public class LunarCalculationException(message: String, cause: Throwable? = null) : RuntimeException(message, cause)
+public class LunarCalculationException : RuntimeException {
+    /** 원인 없이 만든다. */
+    public constructor(message: String) : super(message)
+
+    /** [cause] 를 담아 만든다. */
+    public constructor(message: String, cause: Throwable?) : super(message, cause)
+}

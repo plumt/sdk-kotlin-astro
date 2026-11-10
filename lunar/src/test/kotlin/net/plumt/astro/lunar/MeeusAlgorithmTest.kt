@@ -28,34 +28,34 @@ class MeeusAlgorithmTest {
     // KASI 기준 데이터 (KST)
     private val kasiReference: Map<Pair<Int, Int>, List<Pair<LunarPhaseType, LocalDateTime>>> = mapOf(
         (2026 to 1) to listOf(
-            LunarPhaseType.FULL_MOON to LocalDateTime.of(2026, 1, 3, 19, 3),
-            LunarPhaseType.LAST_QUARTER to LocalDateTime.of(2026, 1, 11, 0, 48),
-            LunarPhaseType.NEW_MOON to LocalDateTime.of(2026, 1, 19, 4, 52),
-            LunarPhaseType.FIRST_QUARTER to LocalDateTime.of(2026, 1, 26, 13, 47),
+            LunarPhaseType.FullMoon to LocalDateTime.of(2026, 1, 3, 19, 3),
+            LunarPhaseType.LastQuarter to LocalDateTime.of(2026, 1, 11, 0, 48),
+            LunarPhaseType.NewMoon to LocalDateTime.of(2026, 1, 19, 4, 52),
+            LunarPhaseType.FirstQuarter to LocalDateTime.of(2026, 1, 26, 13, 47),
         ),
         (2026 to 2) to listOf(
-            LunarPhaseType.FULL_MOON to LocalDateTime.of(2026, 2, 2, 7, 9),
-            LunarPhaseType.LAST_QUARTER to LocalDateTime.of(2026, 2, 9, 21, 43),
-            LunarPhaseType.NEW_MOON to LocalDateTime.of(2026, 2, 17, 21, 1),
-            LunarPhaseType.FIRST_QUARTER to LocalDateTime.of(2026, 2, 24, 21, 27),
+            LunarPhaseType.FullMoon to LocalDateTime.of(2026, 2, 2, 7, 9),
+            LunarPhaseType.LastQuarter to LocalDateTime.of(2026, 2, 9, 21, 43),
+            LunarPhaseType.NewMoon to LocalDateTime.of(2026, 2, 17, 21, 1),
+            LunarPhaseType.FirstQuarter to LocalDateTime.of(2026, 2, 24, 21, 27),
         ),
         (2026 to 3) to listOf(
-            LunarPhaseType.FULL_MOON to LocalDateTime.of(2026, 3, 3, 20, 38),
-            LunarPhaseType.LAST_QUARTER to LocalDateTime.of(2026, 3, 11, 18, 38),
-            LunarPhaseType.NEW_MOON to LocalDateTime.of(2026, 3, 19, 10, 23),
-            LunarPhaseType.FIRST_QUARTER to LocalDateTime.of(2026, 3, 26, 4, 18),
+            LunarPhaseType.FullMoon to LocalDateTime.of(2026, 3, 3, 20, 38),
+            LunarPhaseType.LastQuarter to LocalDateTime.of(2026, 3, 11, 18, 38),
+            LunarPhaseType.NewMoon to LocalDateTime.of(2026, 3, 19, 10, 23),
+            LunarPhaseType.FirstQuarter to LocalDateTime.of(2026, 3, 26, 4, 18),
         ),
         (2026 to 4) to listOf(
-            LunarPhaseType.FULL_MOON to LocalDateTime.of(2026, 4, 2, 11, 14),
-            LunarPhaseType.LAST_QUARTER to LocalDateTime.of(2026, 4, 10, 13, 54),
-            LunarPhaseType.NEW_MOON to LocalDateTime.of(2026, 4, 17, 20, 54),
-            LunarPhaseType.FIRST_QUARTER to LocalDateTime.of(2026, 4, 24, 11, 34),
+            LunarPhaseType.FullMoon to LocalDateTime.of(2026, 4, 2, 11, 14),
+            LunarPhaseType.LastQuarter to LocalDateTime.of(2026, 4, 10, 13, 54),
+            LunarPhaseType.NewMoon to LocalDateTime.of(2026, 4, 17, 20, 54),
+            LunarPhaseType.FirstQuarter to LocalDateTime.of(2026, 4, 24, 11, 34),
         ),
         (2026 to 12) to listOf(
-            LunarPhaseType.NEW_MOON to LocalDateTime.of(2026, 12, 9, 9, 52),
-            LunarPhaseType.FIRST_QUARTER to LocalDateTime.of(2026, 12, 17, 14, 42),
-            LunarPhaseType.FULL_MOON to LocalDateTime.of(2026, 12, 24, 10, 28),
-            LunarPhaseType.LAST_QUARTER to LocalDateTime.of(2026, 12, 31, 3, 59),
+            LunarPhaseType.NewMoon to LocalDateTime.of(2026, 12, 9, 9, 52),
+            LunarPhaseType.FirstQuarter to LocalDateTime.of(2026, 12, 17, 14, 42),
+            LunarPhaseType.FullMoon to LocalDateTime.of(2026, 12, 24, 10, 28),
+            LunarPhaseType.LastQuarter to LocalDateTime.of(2026, 12, 31, 3, 59),
         ),
     )
 
@@ -114,7 +114,7 @@ class MeeusAlgorithmTest {
     fun `각 월에 삭 상현 망 하현 모두 포함됨`() {
         listOf(1, 2, 3, 4, 12).forEach { month ->
             val results = algorithm.calculate(2026, month)
-            LunarPhaseType.entries.forEach { type ->
+            LunarPhaseType.values.forEach { type ->
                 assertTrue(
                     "2026년 ${month}월에 ${type.koreanName} 누락",
                     results.any { it.type == type }
